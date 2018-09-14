@@ -1,10 +1,3 @@
-provider "azurerm" {
-    client_id       = "${var.azure_app_id}"
-    client_secret   = "${var.azure_app_secret}"
-    tenant_id       = "${var.azure_tenant_id}"
-    subscription_id = "${var.azure_subscription_id}"
-}
-
 resource "azurerm_resource_group" "resource_group" {
     name     = "${var.company_name}-${var.region_prefix}-${var.application_name}-${var.environment_prefix}"
     location = "${lookup(var.regions, var.region_prefix)}"
@@ -19,7 +12,7 @@ resource "azurerm_resource_group" "resource_group" {
 resource "azurerm_application_insights" "app_insights" {
     name                        = "${var.company_name}-${var.region_prefix}-${var.application_name}-appinsights-${var.environment_prefix}"
     resource_group_name         = "${azurerm_resource_group.resource_group.name}"
-    location                    = "${lookup(var.regions, var.region_prefix)}2"
+    location                    = "${lookup(var.regions, var.app_insights_region_prefix)}"
     application_type            = "Web"
 
     tags {
